@@ -1,0 +1,78 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+
+namespace _2345
+{
+	class Program
+	{
+		static void Main(string[] args)
+		{
+			//int size;
+
+			//Console.Write("Введите размер ромба (нечетное число): ");
+			//while (!int.TryParse(Console.ReadLine(), out size) || size <= 0 || size % 2 == 0)
+			//{
+			//	Console.WriteLine("Некорректный ввод. Введите нечетное положительное число.");
+			//	Console.Write("Введите размер ромба (нечетное число): ");
+			//}
+
+			//for (int i = 0; i < size; i++)
+			//{
+			//	int spaces = Math.Abs(size / 2 - i);
+			//	int stars = size - 2 * spaces;
+
+			//	Console.Write(new string(' ', spaces)); 
+			//	Console.WriteLine(new string('*', stars)); 
+			//}
+
+			Console.Write("Введите размер шахматной доски (четное число): ");
+			int size;
+
+			while (!int.TryParse(Console.ReadLine(), out size) || size <= 0 || size % 2 != 0)
+			{
+				Console.WriteLine("Некорректный ввод. Введите четное положительное число.");
+				Console.Write("Введите размер шахматной доски: ");
+			}
+
+			Console.Write("Введите масштаб доски (количество звездочек на клетку): ");
+			int scale;
+
+			while (!int.TryParse(Console.ReadLine(), out scale) || scale <= 0)
+			{
+				Console.WriteLine("Некорректный ввод. Введите положительное целое число.");
+				Console.Write("Введите масштаб доски (количество звездочек на клетку): ");
+			}
+
+			DrawBigChessboard(size, scale);
+		}
+
+		static void DrawBigChessboard(int size, int scale)
+		{
+			string black = "****"; 
+			string white = "    "; 
+
+			for (int row = 0; row < size; row++)
+			{
+				for (int i = 0; i < scale; i++) 
+				{
+					for (int col = 0; col < size; col++)
+					{
+						if ((row + col) % 2 == 0)
+						{
+							Console.Write(white);
+						}
+						else
+						{
+							Console.Write(black);
+						}
+					}
+					Console.WriteLine(); 
+				}
+			}
+		}
+	}
+}
