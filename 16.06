@@ -1,0 +1,180 @@
+using System;
+
+
+public class StackNode<T>
+{
+    public T Data { get; set; }
+    public StackNode<T> Next { get; set; }
+
+    public StackNode(T data)
+    {
+        Data = data;
+        Next = null;
+    }
+}
+
+public class LinkedStack<T>
+{
+    private StackNode<T> top;
+    private int count;
+
+    public LinkedStack()
+    {
+        top = null;
+        count = 0;
+    }
+
+    public int Count => count;
+
+    public void Push(T data)
+    {
+        StackNode<T> newNode = new StackNode<T>(data);
+        newNode.Next = top;
+        top = newNode;
+        count++;
+    }
+
+    public T Pop()
+    {
+        if (IsEmpty())
+        {
+            throw new InvalidOperationException("Стек пуст.");
+        }
+
+        T data = top.Data;
+        top = top.Next;
+        count--;
+        return data;
+    }
+
+    public T Peek()
+    {
+        if (IsEmpty())
+        {
+            throw new InvalidOperationException("Стек пуст.");
+        }
+
+        return top.Data;
+    }
+
+    public bool IsEmpty()
+    {
+        return top == null;
+    }
+}
+
+
+public class QueueNode<T>
+{
+    public T Data { get; set; }
+    public QueueNode<T> Next { get; set; }
+    public QueueNode<T> Previous { get; set; }
+
+    public QueueNode(T data)
+    {
+        Data = data;
+        Next = null;
+        Previous = null;
+    }
+}
+
+public class LinkedQueue<T>
+{
+    private QueueNode<T> head; 
+    private QueueNode<T> tail;
+    private int count;
+
+    public LinkedQueue()
+    {
+        head = null;
+        tail = null;
+        count = 0;
+    }
+
+    public int Count => count;
+
+    public void Enqueue(T data)
+    {
+        QueueNode<T> newNode = new QueueNode<T>(data);
+
+        if (IsEmpty())
+        {
+            head = newNode;
+            tail = newNode;
+        }
+        else
+        {
+            tail.Next = newNode;
+            newNode.Previous = tail;
+            tail = newNode;
+        }
+        count++;
+    }
+
+    public T Dequeue()
+    {
+        if (IsEmpty())
+        {
+            throw new InvalidOperationException("Очередь пуста.");
+        }
+
+        T data = head.Data;
+        head = head.Next;
+
+        if (head == null)
+        {
+            tail = null;
+        }
+        else
+        {
+            head.Previous = null;
+        }
+        count--;
+        return data;
+    }
+
+    public T Peek()
+    {
+        if (IsEmpty())
+        {
+            throw new InvalidOperationException("Очередь пуста.");
+        }
+
+        return head.Data;
+    }
+
+    public bool IsEmpty()
+    {
+        return head == null;
+    }
+}
+
+public class Program
+{
+    public static void Main(string[] args)
+    {
+
+        LinkedStack<int> stack = new LinkedStack<int>();
+        stack.Push(1);
+        stack.Push(2);
+        stack.Push(3);
+
+        Console.WriteLine("Стек:");
+        while (!stack.IsEmpty())
+        {
+            Console.WriteLine(stack.Pop());
+        }
+
+
+        LinkedQueue<string> queue = new LinkedQueue<string>();
+        queue.Enqueue("Первый");
+        queue.Enqueue("Второй");
+        queue.Enqueue("Третий");
+
+        Console.WriteLine("\nОчередь:");
+        while (!queue.IsEmpty())
+        {
+            Console.WriteLine(queue.Dequeue());
+        }
+    }
+}
